@@ -7,15 +7,19 @@ interface ToggleProps {
   text: string;
 }
 
-export const Toggle = ({ isOn, onToggle, text }: ToggleProps) => {
+const Toggle = ({ isOn, onToggle, text }: ToggleProps) => {
   return (
     <ToggleContainer onClick={onToggle}>
-      <div className={`toggle-container ${isOn ? 'toggle--checked' : null}`} />
+      <div className={`toggle-container ${isOn ? 'toggle--checked' : null}`}>
+        {isOn ? "ON" : null}
+      </div>
       <div className={`toggle-circle ${isOn ? 'toggle--checked' : null}`} />
       <Text>{text}</Text>
     </ToggleContainer>
   );
 };
+
+export default Toggle;
 
 const ToggleContainer = styled.div`
   position: relative;
@@ -27,17 +31,18 @@ const ToggleContainer = styled.div`
     width: 50px;
     height: 24px;
     border-radius: 30px;
-    background-color: var(--status-active);
+    background-color: var(--status-inactive);
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 2px 0 0 5px;
+    padding: 2px 0 0 7px;
     font-size: 12px;
+    justify-content: flex-start;
     color: #ffffff;
     transition: 0.5s;
   }
   > .toggle--checked {
-    background-color: var(--status-inactive);
+    background-color: var(--status-active);
     transition: 0.5s;
   }
 
