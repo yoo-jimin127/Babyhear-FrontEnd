@@ -1,0 +1,11 @@
+:root {
+  --primary : #B080FA;
+  --text-default : #565656;
+  --highlight : #B17DF5;
+  --sub-text : #878787;
+  --status-inactive : #AEB8DA; 
+  --gradient-start: #585EEA;
+  --gradient-end: #B17DF5;
+  --start-opacity: rgba(88, 94, 234, 0.5);
+  --end-opacity: rgba(177, 125, 245, 0.5);
+}
