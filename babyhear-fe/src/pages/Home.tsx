@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import MainBg from "../assets/mainBg.png";
 import LogoImg from "../assets/logo.png";
-import { Toggle } from "../components/Toggle";
+import Toggle from "../components/Toggle";
+import axios from 'axios';
+import FeatButton from "../components/FeatButton";
+import VideoImg from "../assets/video.png";
+import InfantImg from "../assets/infant.png";
 
 const Home = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -28,6 +32,67 @@ const Home = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    let mediaStream: MediaStream | null = null;
+    let audioContext: AudioContext | null = null;
+    let processor: ScriptProcessorNode | null = null;
+  
+    const startRecording = () => {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then((stream) => {
+          mediaStream = stream;
+          audioContext = new AudioContext();
+          const mediaStreamSource = audioContext.createMediaStreamSource(mediaStream);
+          processor = audioContext.createScriptProcessor(4096, 1, 1);
+  
+          processor.onaudioprocess = (event) => {
+            const audioData = event.inputBuffer.getChannelData(0);
+            // TODO: 오디오 데이터 처리 로직 추가
+            // TODO: 서버 엔드포인트에 연결
+            axios.post("http://13.209.240.190:8080/voice", { audioData })
+              .then((response) => {
+                // TODO: 서버 응답 처리
+              })
+              .catch((error) => {
+                // TODO: 오류 처리
+              });
+          };
+  
+          mediaStreamSource.connect(processor);
+          processor.connect(audioContext.destination);
+        })
+        .catch((error) => {
+          // 오류 처리
+        });
+    };
+  
+    const stopRecording = () => {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach((track) => {
+          track.stop();
+        });
+        mediaStream = null;
+      }
+  
+      if (audioContext) {
+        audioContext.close();
+        audioContext = null;
+      }
+  
+      if (processor) {
+        processor.onaudioprocess = null;
+        processor.disconnect();
+        processor = null;
+      }
+    };
+  
+    if (isRecordOn) {
+      startRecording();
+    } else {
+      stopRecording();
+    }
+  }, [isRecordOn]);  
   
   return (
     <Container>
@@ -53,6 +118,36 @@ const Home = () => {
           </ToggleBox>
         </DetectBox>
       </TopWrapper>
+      <BottomWrapper>
+        <ContentBox>
+          <FeatTitle>
+            영유아를 위한 <span style={{ color: "var(--highlight)"}}>영상 큐레이션</span>
+          </FeatTitle>
+          <FeatDesc>
+            베이비 히어에서 영유아 정서 발달에 도움이 되는<br />
+            양질의 콘텐츠를 선별했어요.
+            <FeatButton 
+              link="/video-curation" 
+              title="Video Curation" 
+              image={VideoImg} 
+            />
+          </FeatDesc>
+        </ContentBox>
+        <ContentBox>
+          <FeatTitle>
+            부모님을 위한 <span style={{ color: "var(--highlight)"}}>육아 커뮤니티</span>
+          </FeatTitle>
+          <FeatDesc>
+            청각 장애 부모님을 위한 육아커뮤니티에요.<br />
+            육아 중 겪는 다양한 이야기를 함께 나눠보세요!
+            <FeatButton 
+              link="/community" 
+              title="Parenting Comminity" 
+              image={InfantImg} 
+            />
+          </FeatDesc>
+        </ContentBox>
+      </BottomWrapper>
     </Container>
   );
 }
@@ -124,4 +219,40 @@ const ToggleBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+`;
+
+const BottomWrapper = styled.div`
+  height: 530px;
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  @media (max-width: 420px) {
+    justify-content: space-around;
+    margin-top: 50px;
+  }
+`;
+
+const ContentBox = styled.div`
+  width: 350px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+`;
+
+const FeatTitle = styled.div`
+  color: var(--text-default);
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const FeatDesc = styled.div`
+  color: var(--sub-text);
+  font-size: 13px;
+  margin-bottom: 20px;
 `;
