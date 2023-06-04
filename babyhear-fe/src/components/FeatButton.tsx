@@ -12,11 +12,11 @@ const FeatButton = ({ link, title, image }: FeatButtonProps) => {
   return (
     <ButtonContainer to={link}>
       <LeftContents>
-        <img src={image} alt="video-image" style={{ width: "65px" }} />
+        <img src={image} alt="feat-button-image" style={{ width: "65px" }} />
         <Title>{title}</Title>
       </LeftContents>
       <RightContents>
-        <img src={ArrowImg} alt="arrow-image" style={{ width: "45px" }} />
+        <img src={ArrowImg} alt="feat-button-image" style={{ width: "45px" }} />
       </RightContents>
     </ButtonContainer>
   );
