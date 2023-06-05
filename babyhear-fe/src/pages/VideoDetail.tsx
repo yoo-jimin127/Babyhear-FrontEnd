@@ -153,5 +153,5 @@ const VideoTitle = styled.div`
   color: var(--sub-text);
   font-size: 15px;
   font-weight: bold;
-  margin: 40px 0 0 10px;
+  margin: 30px 0 0 10px;
 `;
