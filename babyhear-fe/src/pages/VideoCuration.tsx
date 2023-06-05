@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import FeatBg from "../assets/featBg.png";
 import LogoImg from "../assets/logo.png";
@@ -7,6 +8,7 @@ import CommunityImg from "../assets/community.png";
 import EtiquetteImg from "../assets/etiquette.png";
 import SolvingImg from "../assets/solving.png";
 import VideoCurationButton from "../components/VideoCurationButton";
+import BackButtonImg from "../assets/back-icon.png";
 
 const VideoCuration = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -27,6 +29,9 @@ const VideoCuration = () => {
     <Container>
       <TopWrapper  windowWidth={windowWidth}>
         <TitleBox>
+          <BackButton to="/home">
+            <img src={BackButtonImg} alt="back-button" style={{ width: "35px" }} />
+          </BackButton>
           <Logo src={LogoImg} alt='logo-image' />
           <Title>
             베이비 히어에서 제공하는<br />
@@ -111,6 +116,7 @@ const TitleBox = styled.div`
 
 const Logo = styled.img`
   width: 60px;
+  margin-left: 15px;
 `;
 
 const Title = styled.div`
@@ -154,4 +160,10 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: bold;
   margin-left: 30px;
+`;
+
+const BackButton = styled(Link)`
+  width: 35px;
+  margin: 10px 0 0 10px;
+  margin-right: auto;
 `;

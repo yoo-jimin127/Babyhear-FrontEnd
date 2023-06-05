@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import FeatBg from "../assets/featBg.png";
 import LogoImg from "../assets/logo.png";
 import YoutubeThumbnail from "../components/YoutubeThumbnail";
 import { VIDEO_URLS } from '../static/videoUrl';
+import BackButtonImg from "../assets/back-icon.png";
 
 const VideoDetail = () => {
   const videoId = useParams().videoId;
@@ -27,8 +28,11 @@ const VideoDetail = () => {
 
   return (
     <Container>
-      <TopWrapper  windowWidth={windowWidth}>
+      <TopWrapper windowWidth={windowWidth}>
         <TitleBox>
+          <BackButton to="/video-curation">
+            <img src={BackButtonImg} alt="back-button" style={{ width: "35px" }} />
+          </BackButton>
           <Logo src={LogoImg} alt='logo-image' />
           <Title>
             베이비 히어에서 제공하는<br />
@@ -92,6 +96,7 @@ const TitleBox = styled.div`
 
 const Logo = styled.img`
   width: 60px;
+  margin-left: 15px;
 `;
 
 const Title = styled.div`
@@ -154,4 +159,10 @@ const VideoTitle = styled.div`
   font-size: 15px;
   font-weight: bold;
   margin: 30px 0 0 10px;
+`;
+
+const BackButton = styled(Link)`
+  width: 35px;
+  margin: 10px 0 0 10px;
+  margin-right: auto;
 `;
