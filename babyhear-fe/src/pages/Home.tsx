@@ -12,6 +12,7 @@ const Home = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isRecordOn, setIsRecordOn] = useState(false);
   const [isVibrateOn, setIsVibrateOn] = useState(false);
+  const [hasSentRequest, setHasSentRequest] = useState(false);
 
   const handleRecordToggle = () => {
     setIsRecordOn(!isRecordOn);
@@ -22,43 +23,37 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
     let mediaStream: MediaStream | null = null;
     let audioContext: AudioContext | null = null;
     let processor: ScriptProcessorNode | null = null;
-  
+
     const startRecording = () => {
-      navigator.mediaDevices.getUserMedia({ audio: true })
+      setIsRecordOn(true);
+      setHasSentRequest(false);
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
         .then((stream) => {
           mediaStream = stream;
           audioContext = new AudioContext();
           const mediaStreamSource = audioContext.createMediaStreamSource(mediaStream);
           processor = audioContext.createScriptProcessor(4096, 1, 1);
-  
+          let audioChunks: Float32Array[] = [];
+          let startTime = audioContext.currentTime;
+
           processor.onaudioprocess = (event) => {
             const audioData = event.inputBuffer.getChannelData(0);
-            // TODO: 오디오 데이터 처리 로직 추가
-            // TODO: 서버 엔드포인트에 연결
-            axios.post("http://13.209.240.190:8080/voice", { audioData })
-              .then((response) => {
-                // TODO: 서버 응답 처리
-              })
-              .catch((error) => {
-                // TODO: 오류 처리
-              });
+            audioChunks.push(audioData);
+
+            if (audioContext && audioContext.currentTime - startTime >= 5) {
+              if (!hasSentRequest) {
+                const mergedAudioData = mergeAudioChunks(audioChunks);
+                sendAudioData(mergedAudioData);
+              }
+              audioChunks = [];
+              startTime = audioContext.currentTime;
+            }
           };
-  
+
           mediaStreamSource.connect(processor);
           processor.connect(audioContext.destination);
         })
@@ -66,33 +61,52 @@ const Home = () => {
           // 오류 처리
         });
     };
-  
-    const stopRecording = () => {
-      if (mediaStream) {
-        mediaStream.getTracks().forEach((track) => {
-          track.stop();
+
+    const sendAudioData = (audioData: Float32Array) => {
+      const formData = new FormData();
+      const blob = new Blob([audioData], { type: "audio/wav" });
+      formData.append("file", blob, "signal_test.wav");
+
+      // TODO: 서버 엔드포인트에 연결하여 오디오 데이터 전송
+      axios
+        .post("https://seungyeonnnnnni.shop/record", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          setHasSentRequest(true);
+          // TODO: 서버 응답 처리
+        })
+        .catch((error) => {
+          // TODO: 오류 처리
         });
-        mediaStream = null;
-      }
-  
-      if (audioContext) {
-        audioContext.close();
-        audioContext = null;
-      }
-  
-      if (processor) {
-        processor.onaudioprocess = null;
-        processor.disconnect();
-        processor = null;
-      }
     };
-  
+
+    const mergeAudioChunks = (audioChunks: Float32Array[]): Float32Array => {
+      const totalLength = audioChunks.reduce((length, chunk) => length + chunk.length, 0);
+      const mergedAudioData = new Float32Array(totalLength);
+      let offset = 0;
+      audioChunks.forEach((chunk) => {
+        mergedAudioData.set(chunk, offset);
+        offset += chunk.length;
+      });
+      return mergedAudioData;
+    };
+
+    const stopRecording = () => {
+      setIsRecordOn(false);
+      if (processor) processor.disconnect();
+      if (audioContext) audioContext.suspend();
+      if (mediaStream) mediaStream.getTracks().forEach((track) => track.stop());
+    };
+
     if (isRecordOn) {
       startRecording();
     } else {
       stopRecording();
     }
-  }, [isRecordOn]);  
+  }, [isRecordOn, hasSentRequest]);
   
   return (
     <Container>
