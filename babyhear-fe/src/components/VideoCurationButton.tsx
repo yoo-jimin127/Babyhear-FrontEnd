@@ -7,11 +7,12 @@ interface VideoCurationButtonProps {
   link: string;
   text: React.ReactNode;
   image: string;
+  category: string;
 }
 
-const VideoCurationButton = ({ link, text, image }: VideoCurationButtonProps) => {
+const VideoCurationButton = ({ link, text, image, category }: VideoCurationButtonProps) => {
   return (
-    <ButtonContainer to={link}>
+    <ButtonContainer to={link} state={{ category: category }}>
       <img src={image} alt="curation-image" style={{ width: "70px" }} />
       <Text>{text}</Text>
     </ButtonContainer>
