@@ -1,45 +1,18 @@
-import { useEffect, useState } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import FeatBg from "../assets/featBg.png";
-import LogoImg from "../assets/logo.png";
 import YoutubeThumbnail from "../components/YoutubeThumbnail";
 import { VIDEO_URLS } from '../static/videoUrl';
-import BackButtonImg from "../assets/back-icon.png";
+import Header from "../components/Header";
 
 const VideoDetail = () => {
   const videoId = useParams().videoId;
   const location = useLocation();
   const { category } = location.state || {};
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const IntVideoId = parseInt(videoId || "0", 10) as number;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <Container>
-      <TopWrapper windowWidth={windowWidth}>
-        <TitleBox>
-          <BackButton to="/video-curation">
-            <img src={BackButtonImg} alt="back-button" style={{ width: "35px" }} />
-          </BackButton>
-          <Logo src={LogoImg} alt='logo-image' />
-          <Title>
-            베이비 히어에서 제공하는<br />
-            다양한 서비스를 사용해보세요.
-          </Title>
-        </TitleBox>
-      </TopWrapper>
+      <Header link="/video-curation" />
       <BottomWrapper>
         <CategoryTitleBox>
           <VideoCategory>{category}</VideoCategory>
@@ -73,37 +46,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const TopWrapper = styled.div<{ windowWidth: number }>`
-  width: ${(props) => (props.windowWidth < 390 ? "100%" : "390px" )};
-  height: 100px;
-  background-image: url(${FeatBg});
-  background-position: top;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-`;
-
-const TitleBox = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin: 10px 0 0 10px;
-  margin-right: auto;
-`;
-
-const Logo = styled.img`
-  width: 60px;
-  margin-left: 15px;
-`;
-
-const Title = styled.div`
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.7;
 `;
 
 const SubTitle = styled.div`
@@ -159,10 +101,4 @@ const VideoTitle = styled.div`
   font-size: 15px;
   font-weight: bold;
   margin: 30px 0 0 10px;
-`;
-
-const BackButton = styled(Link)`
-  width: 35px;
-  margin: 10px 0 0 10px;
-  margin-right: auto;
 `;

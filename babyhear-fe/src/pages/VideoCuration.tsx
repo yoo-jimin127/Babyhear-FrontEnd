@@ -1,44 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import FeatBg from "../assets/featBg.png";
-import LogoImg from "../assets/logo.png";
 import EmotionImg from "../assets/emotion.png";
 import CommunityImg from "../assets/community.png";
 import EtiquetteImg from "../assets/etiquette.png";
 import SolvingImg from "../assets/solving.png";
 import VideoCurationButton from "../components/VideoCurationButton";
-import BackButtonImg from "../assets/back-icon.png";
+import Header from "../components/Header";
 
 const VideoCuration = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <Container>
-      <TopWrapper  windowWidth={windowWidth}>
-        <TitleBox>
-          <BackButton to="/home">
-            <img src={BackButtonImg} alt="back-button" style={{ width: "35px" }} />
-          </BackButton>
-          <Logo src={LogoImg} alt='logo-image' />
-          <Title>
-            베이비 히어에서 제공하는<br />
-            다양한 서비스를 사용해보세요.
-          </Title>
-        </TitleBox>
-      </TopWrapper>
+      <Header link="/home" />
       <BottomWrapper>
         <FeatTitle>
           영유아 정서 발달에 도움이 되는<br />
@@ -95,37 +66,6 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const TopWrapper = styled.div<{ windowWidth: number }>`
-  width: ${(props) => (props.windowWidth < 390 ? "100%" : "390px" )};
-  height: 100px;
-  background-image: url(${FeatBg});
-  background-position: top;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-`;
-
-const TitleBox = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin: 10px 0 0 10px;
-  margin-right: auto;
-`;
-
-const Logo = styled.img`
-  width: 60px;
-  margin-left: 15px;
-`;
-
-const Title = styled.div`
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.7;
-`;
-
 const BottomWrapper = styled.div`
   height: 650px;
   display: flex;
@@ -160,10 +100,4 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: bold;
   margin-left: 30px;
-`;
-
-const BackButton = styled(Link)`
-  width: 35px;
-  margin: 10px 0 0 10px;
-  margin-right: auto;
 `;
