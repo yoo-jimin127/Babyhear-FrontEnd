@@ -10,7 +10,7 @@ import VideoCurationButton from "../components/VideoCurationButton";
 
 const VideoCuration = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -41,11 +41,12 @@ const VideoCuration = () => {
           원하는 카테고리를 선택해보세요!
         </FeatTitle>
         <ContentBox>
-          <Category>감정표현과 사회적 상호작용</Category>
+          <Category>감정 표현과 사회적 상호작용</Category>
           <VideoCurationButton 
             link="/video-detail/1"
             text={`다양한 감정을 인식하고 표현하며,\n사회적 상호작용을 경험할 수 있어요.`}
             image={EmotionImg}
+            category="감정 표현과 사회적 상호작용"
           />
         </ContentBox>
         <ContentBox>
@@ -54,6 +55,7 @@ const VideoCuration = () => {
             link="/video-detail/2"
             text={`수화 또는 자막이 포함된 영상을 활용해\n언어와 의사소통 능력을 기를 수 있어요.`}
             image={CommunityImg}
+            category="언어 발달과 의사소통"
           />
         </ContentBox>
         <ContentBox>
@@ -62,6 +64,7 @@ const VideoCuration = () => {
             link="/video-detail/3"
             text={`식사 예절, 손 씻기, 정리정돈 등\n예절과 생활 습관을 배울 수 있어요.`}
             image={EtiquetteImg}
+            category="예절과 생활습관"
           />
         </ContentBox>
         <ContentBox>
@@ -70,6 +73,7 @@ const VideoCuration = () => {
             link="/video-detail/4"
             text={`색상, 모양, 소리, 텍스처 등\n감각 자극과 인지발달을 도울 수 있어요.`}
             image={SolvingImg}
+            category="간단한 문제 해결과 논리적 사고"
           />
         </ContentBox>
       </BottomWrapper>
