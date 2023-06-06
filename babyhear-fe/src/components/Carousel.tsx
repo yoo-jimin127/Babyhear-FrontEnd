@@ -2,8 +2,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { styled } from "styled-components";
+import CommunityBox from "./CommunityBox";
+import { CommunityBoxProps } from "../interfaces/postContent";
 
-const Carousel = () => {
+interface CarouselProps {
+  contents: Array<CommunityBoxProps>;
+}
+
+const Carousel = ({contents}: CarouselProps) => {
 	const settings = {
     dots: true,
     infinite: true,
@@ -15,12 +21,15 @@ const Carousel = () => {
     return (
     <Section className="page-carousel">
     	<Slider {...settings}>
-        <Box>box 1</Box>
-        <Box>box 2</Box>
-        <Box>box 3</Box>
-        <Box>box 4</Box>
-        <Box>box 5</Box>
-        </Slider>
+        {contents.map((post, index) => (
+          <CommunityBox
+            key={index}
+            title={post.title}
+            writer={post.writer}
+            text={post.text}
+          />
+        ))}
+      </Slider>
     </Section>
     );
 }
@@ -33,10 +42,12 @@ const Section = styled.section`
   margin: 0 auto;
 `;
 
-const Box = styled.div`
-  width: 200px;
-  height: 150px;
-  padding: 10px;
-  background-color: #ffffff;
-  border-radius: 10px;
+const Arrow = styled.div`
+  color: var(--primary);
+  font-size: 24px;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 `;
