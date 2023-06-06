@@ -44,7 +44,7 @@ const Home = () => {
   useEffect(() => { 
     if(!recordingBlob) return;
 
-    const audioFile = new File([recordingBlob], 'signal_9s.wav', { type: 'audio/wav' })
+    const audioFile = new File([recordingBlob], 'signal_9s.webm', { type: 'audio/webm' })
     const formData = new FormData()
     formData.append('file', audioFile);
 
@@ -62,11 +62,11 @@ const Home = () => {
       });
 
     // 다운로드 파일 주석
-    const url = URL.createObjectURL(recordingBlob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "voice.wav";
-    link.click();
+    // const url = URL.createObjectURL(recordingBlob);
+    // const link = document.createElement("a");
+    // link.href = url;
+    // link.download = "voice.webm";
+    // link.click();
   },[recordingBlob])
 
   useEffect(() => {
