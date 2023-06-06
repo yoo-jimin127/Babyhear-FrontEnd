@@ -7711,6 +7711,18 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
+react-audio-visualize@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-audio-visualize/-/react-audio-visualize-1.0.0.tgz#87b60a2bd75bfcb9c159fa0a540fb9f8004c5757"
+  integrity sha512-fjLmgL48mc6nwtVrf1WgetpjqODRjupgpBM5C7pwU7F4snJVS5C4TdO9cL4TkfwZ4ELUI/5w+gW6UQNco2YgPg==
+
+react-audio-voice-recorder@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-audio-voice-recorder/-/react-audio-voice-recorder-1.2.0.tgz#b621210c6c42425ea178ec3e00dbc45689e801a0"
+  integrity sha512-rWvzVueIwEj56nJw/zjtcZbWjRdhFUxnMDNmXMZs1rHY8RosUKpsZhoaxXrr+4hsXTFrNnxgBbS8bDdCTWIRlg==
+  dependencies:
+    react-audio-visualize "^1.0.0"
+
 react-dev-utils@^12.0.1:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-12.0.1.tgz#ba92edb4a1f379bd46ccd6bcd4e7bc398df33e73"
