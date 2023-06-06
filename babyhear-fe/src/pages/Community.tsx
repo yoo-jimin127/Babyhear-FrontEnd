@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import Carousel from "../components/Carousel";
+import { LikePostDummy, RecentPostDummy } from "../static/postContent";
 
 const Community = () => {
   return (
@@ -15,11 +16,11 @@ const Community = () => {
         </FeatTitle>
         <ContentBox>
           <Category>많은 공감을 받은 이야기에요.</Category>
-          <Carousel />
+          <Carousel contents={LikePostDummy} />
         </ContentBox>
         <ContentBox>
           <Category>최근에 올라온 이야기에요.</Category>
-          <Carousel />
+          <Carousel contents={RecentPostDummy} />
         </ContentBox>
       </BottomWrapper>
       <Button to="/post">글쓰기</Button>
@@ -69,7 +70,7 @@ const Category = styled.div`
   color: var(--text-default);
   font-size: 16px;
   font-weight: bold;
-  margin: 20px 0 20px 20px;
+  margin: 20px 0 0 20px;
   margin-right: auto;
 `;
 
