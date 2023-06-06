@@ -7,12 +7,12 @@ import axios from 'axios';
 import FeatButton from "../components/FeatButton";
 import VideoImg from "../assets/video.png";
 import InfantImg from "../assets/infant.png";
+import { useAudioRecorder } from 'react-audio-voice-recorder';
 
 const Home = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isRecordOn, setIsRecordOn] = useState(false);
   const [isVibrateOn, setIsVibrateOn] = useState(false);
-  const [hasSentRequest, setHasSentRequest] = useState(false);
 
   const handleRecordToggle = () => {
     setIsRecordOn(!isRecordOn);
@@ -22,91 +22,52 @@ const Home = () => {
     setIsVibrateOn(!isVibrateOn);
   };
 
+  const {
+    startRecording,
+    stopRecording,
+    recordingBlob,
+  } = useAudioRecorder();
+
   useEffect(() => {
-    let mediaStream: MediaStream | null = null;
-    let audioContext: AudioContext | null = null;
-    let processor: ScriptProcessorNode | null = null;
+    let nineSecInterval = setInterval(() => {
+      if(isRecordOn){
+        stopRecording();
+        startRecording();
+      }
+    }, 9000)
 
-    const startRecording = () => {
-      setIsRecordOn(true);
-      setHasSentRequest(false);
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then((stream) => {
-          mediaStream = stream;
-          audioContext = new AudioContext();
-          const mediaStreamSource = audioContext.createMediaStreamSource(mediaStream);
-          processor = audioContext.createScriptProcessor(4096, 1, 1);
-          let audioChunks: Float32Array[] = [];
-          let startTime = audioContext.currentTime;
-
-          processor.onaudioprocess = (event) => {
-            const audioData = event.inputBuffer.getChannelData(0);
-            audioChunks.push(audioData);
-
-            if (audioContext && audioContext.currentTime - startTime >= 5) {
-              if (!hasSentRequest) {
-                const mergedAudioData = mergeAudioChunks(audioChunks);
-                sendAudioData(mergedAudioData);
-              }
-              audioChunks = [];
-              startTime = audioContext.currentTime;
-            }
-          };
-
-          mediaStreamSource.connect(processor);
-          processor.connect(audioContext.destination);
-        })
-        .catch((error) => {
-          // 오류 처리
-        });
-    };
-
-    const sendAudioData = (audioData: Float32Array) => {
-      const formData = new FormData();
-      const blob = new Blob([audioData], { type: "audio/wav" });
-      formData.append("file", blob, "signal_test.wav");
-
-      // TODO: 서버 엔드포인트에 연결하여 오디오 데이터 전송
-      axios
-        .post("https://seungyeonnnnnni.shop/record", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          setHasSentRequest(true);
-          // TODO: 서버 응답 처리
-        })
-        .catch((error) => {
-          // TODO: 오류 처리
-        });
-    };
-
-    const mergeAudioChunks = (audioChunks: Float32Array[]): Float32Array => {
-      const totalLength = audioChunks.reduce((length, chunk) => length + chunk.length, 0);
-      const mergedAudioData = new Float32Array(totalLength);
-      let offset = 0;
-      audioChunks.forEach((chunk) => {
-        mergedAudioData.set(chunk, offset);
-        offset += chunk.length;
-      });
-      return mergedAudioData;
-    };
-
-    const stopRecording = () => {
-      setIsRecordOn(false);
-      if (processor) processor.disconnect();
-      if (audioContext) audioContext.suspend();
-      if (mediaStream) mediaStream.getTracks().forEach((track) => track.stop());
-    };
-
-    if (isRecordOn) {
-      startRecording();
-    } else {
-      stopRecording();
+    return () => {
+      clearInterval(nineSecInterval)
     }
-  }, [isRecordOn, hasSentRequest]);
+  },[stopRecording, startRecording, isRecordOn])
+
+  useEffect(() => { 
+    if(!recordingBlob) return;
+
+    const audioFile = new File([recordingBlob], 'signal_9s.wav', { type: 'audio/wav' })
+    const formData = new FormData()
+    formData.append('file', audioFile);
+
+    axios
+      .post("https://seungyeonnnnnni.shop/record", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("오디오 업로드 성공: ", response);
+      })
+      .catch((error) => {
+        console.error("오디오 업로드 실패: ", error);
+      });
+
+    // 다운로드 파일 주석
+    const url = URL.createObjectURL(recordingBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "voice.wav";
+    link.click();
+  },[recordingBlob])
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -118,7 +79,7 @@ const Home = () => {
           .then((data) => {
             if (data === 1) {
               console.log("-----start vibrate-----");
-              window.navigator.vibrate([500, 100, 500, 100, 500, 100, 500, 100, 500, 100]);
+              window.navigator.vibrate([1000, 100, 1000, 100, 1000, 100, 1000, 100, 1000, 100, 1000, 100, 1000, 100, 1000, 100]);
               console.log("-----end vibrate-----");
             }
           })
@@ -133,7 +94,6 @@ const Home = () => {
     };
   }, [isVibrateOn]);
 
-  
   return (
     <Container>
       <TopWrapper windowWidth={windowWidth}>
