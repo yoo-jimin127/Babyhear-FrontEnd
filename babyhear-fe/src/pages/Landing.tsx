@@ -75,7 +75,7 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 const SubTitle = styled.div`
@@ -92,7 +92,6 @@ const FlexBox = styled.div`
 `;
 
 const Title = styled.div`
-  margin-top: 20px;
   color: var(--primary);
   font-size: 24px;
   font-weight: bold;
@@ -104,7 +103,7 @@ const Ear = styled.img`
 `;
 
 const Button = styled(Link)`
-  margin: 90px 0 20px 0;
+  margin: 60px 0 20px 0;
   padding: 10px 20px;
   font-size: 14px;
   color: #ffffff;
