@@ -107,6 +107,32 @@ const Home = () => {
       stopRecording();
     }
   }, [isRecordOn, hasSentRequest]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isVibrateOn) {
+      interval = setInterval(() => {
+        fetch("https://seungyeonnnnnni.shop/hello")
+          .then((response) => response.json())
+          .then((data) => {
+            if (data === 1) {
+              console.log("-----start vibrate-----");
+              window.navigator.vibrate([500, 100, 500, 100, 500, 100, 500, 100, 500, 100]);
+              console.log("-----end vibrate-----");
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      }, 10000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isVibrateOn]);
+
   
   return (
     <Container>
