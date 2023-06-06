@@ -157,7 +157,7 @@ const SubmitButton = styled.button`
 const Legal = styled.div`
   width: 300px;
   height: 150px;
-  margin-top: 15px;
+  margin: 20px 0;
   color: var(--sub-text);
   font-size: 11px;
   white-space: pre-line;
