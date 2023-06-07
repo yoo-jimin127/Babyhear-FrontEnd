@@ -109,6 +109,7 @@ const Title = styled.div`
   color: var(--primary);
   font-size: 24px;
   font-weight: bold;
+  margin-top: 15px;
 `;
 
 const Ear = styled.img`
