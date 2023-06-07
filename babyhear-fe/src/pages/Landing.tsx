@@ -8,6 +8,19 @@ import { Link, useNavigate } from "react-router-dom";
 const Landing = () => {
   const [remainderSec, setRemainderSec] = useState(4);
   const navigate = useNavigate();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      console.log(window.innerWidth);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,7 +38,7 @@ const Landing = () => {
 
   return (
     <Container>
-      <TopWrapper>
+      <TopWrapper windowWidth={windowWidth}>
         <Logo src={LogoImg} alt="logo-image" />
       </TopWrapper>
       <BottomWrapper>
@@ -53,8 +66,8 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const TopWrapper = styled.div`
-  width: 420px;
+const TopWrapper = styled.div<{ windowWidth: number }>`
+  width: ${(props) => (props.windowWidth < 390 ? "390px" : "440px" )};
   height: 400px;
   background-image: url(${LandingBg});
   background-position: top;
@@ -71,6 +84,7 @@ const Logo = styled.img`
 
 const BottomWrapper = styled.div`
   width: 420px;
+  max-width: 440px;
   height: 60vh;
   display: flex;
   flex-direction: column;

@@ -19,6 +19,7 @@ const Header = ({ link }: HeaderProps) => {
     window.addEventListener("resize", handleResize);
 
     return () => {
+      console.log(window.innerWidth);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -42,7 +43,7 @@ const Header = ({ link }: HeaderProps) => {
 export default Header;
 
 const TopWrapper = styled.div<{ windowWidth: number }>`
-  width: ${(props) => (props.windowWidth < 390 ? "100%" : "390px" )};
+  width: ${(props) => (props.windowWidth < 390 ? "390px" : "440px" )};
   height: 100px;
   background-image: url(${FeatBg});
   background-position: top;
@@ -56,7 +57,7 @@ const TopWrapper = styled.div<{ windowWidth: number }>`
 const TitleBox = styled.div`
   display: flex;
   align-items: flex-start;
-  margin: 10px 0 0 10px;
+  margin: 10px 0 0 7%;
   margin-right: auto;
 `;
 
