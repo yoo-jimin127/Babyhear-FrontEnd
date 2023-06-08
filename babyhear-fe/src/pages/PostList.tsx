@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
 import { Link } from 'react-router-dom';
-import { LikePostDummy, RecentPostDummy } from '../static/postContent';
+import { LikePostDummy } from '../static/postContent';
 import ListComponent from '../components/ListComponent';
 
 const PostList = () => {
@@ -14,7 +14,9 @@ const PostList = () => {
           <span style={{ color: "var(--highlight)"}}>육아 커뮤니티</span>에요.<br />
           다양한 이야기를 함께 나눠보세요!
         </FeatTitle>
-          <ListComponent contents={LikePostDummy} />
+          <ContentBox>
+            <ListComponent contents={LikePostDummy} />
+          </ContentBox>
       </BottomWrapper>
     </Container>
   );
@@ -27,15 +29,17 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 30px;
 `;
 
 const BottomWrapper = styled.div`
   height: 550px;
   display: flex;
-  margin: 50px 0;
+  padding-right: 20px;
+  margin: 30px 0;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 
   @media (max-width: 420px) {
     justify-content: space-around;
@@ -46,7 +50,7 @@ const FeatTitle = styled.div`
   color: var(--text-default);
   font-size: 20px;
   font-weight: bold;
-  margin: -20px 0 0 20px;
+  margin: -20px 0 0 40px;
   margin-right: auto;
 `;
 

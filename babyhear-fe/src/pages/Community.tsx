@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import { LikePostDummy, RecentPostDummy } from "../static/postContent";
+import ArrowImg from "../assets/arrow.png";
 
 const Community = () => {
   return (
@@ -15,11 +16,23 @@ const Community = () => {
           다양한 이야기를 함께 나눠보세요!
         </FeatTitle>
         <ContentBox>
-          <Category to="/community-list/1">많은 공감을 받은 이야기에요.</Category>
+          <Category to="/community-list/1">
+            많은 공감을 받은 이야기에요.
+            <ArrowButton>
+              전체 보기
+              <img src={ArrowImg} alt="arrow-img" style={{ width: "20px" }} />
+            </ArrowButton>
+          </Category>
           <Carousel contents={LikePostDummy} />
         </ContentBox>
         <ContentBox>
-          <Category to="/community-list/2">최근에 올라온 이야기에요.</Category>
+          <Category to="/community-list/2">
+            최근에 올라온 이야기에요.
+            <ArrowButton style={{ marginLeft: "90px"}}>
+              전체 보기
+              <img src={ArrowImg} alt="arrow-img" style={{ width: "20px" }} />
+            </ArrowButton>
+          </Category>
           <Carousel contents={RecentPostDummy} />
         </ContentBox>
       </BottomWrapper>
@@ -68,10 +81,22 @@ const ContentBox = styled.div`
 
 const Category = styled(Link)`
   color: var(--text-default);
+  display: flex;
+  justify-content: space-around;
   font-size: 16px;
   font-weight: bold;
-  margin: 20px 0 0 20px;
+  margin: 20px 0 0 30px;
   margin-right: auto;
+`;
+
+const ArrowButton = styled.div`
+  width: 80px;
+  color: var(--primary);
+  margin-left: 70px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Button = styled(Link)`
