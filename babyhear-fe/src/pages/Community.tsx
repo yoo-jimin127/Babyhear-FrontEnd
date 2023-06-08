@@ -15,11 +15,11 @@ const Community = () => {
           다양한 이야기를 함께 나눠보세요!
         </FeatTitle>
         <ContentBox>
-          <Category>많은 공감을 받은 이야기에요.</Category>
+          <Category to="/community-list/1">많은 공감을 받은 이야기에요.</Category>
           <Carousel contents={LikePostDummy} />
         </ContentBox>
         <ContentBox>
-          <Category>최근에 올라온 이야기에요.</Category>
+          <Category to="/community-list/2">최근에 올라온 이야기에요.</Category>
           <Carousel contents={RecentPostDummy} />
         </ContentBox>
       </BottomWrapper>
@@ -66,7 +66,7 @@ const ContentBox = styled.div`
   align-items: center;
 `;
 
-const Category = styled.div`
+const Category = styled(Link)`
   color: var(--text-default);
   font-size: 16px;
   font-weight: bold;

@@ -27,6 +27,7 @@ const Carousel = ({contents}: CarouselProps) => {
             title={post.title}
             writer={post.writer}
             text={post.text}
+            link={post.link}
           />
         ))}
       </Slider>
@@ -40,14 +41,4 @@ const Section = styled.section`
   width: 320px;
   height: 170px;
   margin: 0 auto;
-`;
-
-const Arrow = styled.div`
-  color: var(--primary);
-  font-size: 24px;
-  line-height: 1;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
 `;

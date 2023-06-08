@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PostImg from "../assets/post.png";
 import { CommunityBoxProps } from "../interfaces/postContent";
 
-const CommunityBox = ({ title, writer, text}: CommunityBoxProps) => {
+const PostBox = ({ title, writer, text}: CommunityBoxProps) => {
   const truncatedTitle = title.length > 15 ? `${title.substring(0, 15)} ...` : title;
   const truncatedText = text.length > 100 ? `${text.substring(0, 100)} ...` : text;
 
@@ -23,13 +23,14 @@ const CommunityBox = ({ title, writer, text}: CommunityBoxProps) => {
   );
 }
 
-export default CommunityBox;
+export default PostBox;
 
 const Container = styled.div`
-  width: 300px;
+  width: 350px;
   height: 150px;
   padding: 10px;
   margin: 10px;
+  margin-right: 20px;
   background-color: #ffffff;
   border-radius: 10px;
 `;
@@ -60,7 +61,9 @@ const Writer = styled.div`
 `;
 
 const Content = styled.div`
+  width: 300px;
   height: 60px;
+  margin-left: 40px;
   margin-top: 10px;
   color: var(--sub-text);
   font-size: 11px;
