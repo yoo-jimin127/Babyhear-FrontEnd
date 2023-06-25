@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PostImg from "../assets/post.png";
 import { CommunityBoxProps } from "../interfaces/postContent";
+import HeartImg from "../assets/heart.png";
 
 const PostBox = ({ title, writer, text}: CommunityBoxProps) => {
   const truncatedTitle = title.length > 15 ? `${title.substring(0, 15)} ...` : title;
@@ -18,6 +18,10 @@ const PostBox = ({ title, writer, text}: CommunityBoxProps) => {
           </div>
         </TitleBox>
         <Content>{truncatedText}</Content>
+        <HeartButton>
+          <img src={HeartImg} alt="heart-img" style={{ width: "20px", marginRight: "5px" }} />
+          12
+        </HeartButton>
       </Wrapper>
     </Container>
   );
@@ -26,11 +30,10 @@ const PostBox = ({ title, writer, text}: CommunityBoxProps) => {
 export default PostBox;
 
 const Container = styled.div`
-  width: 350px;
+  width: 330px;
   height: 150px;
   padding: 10px;
   margin: 10px;
-  margin-right: 20px;
   background-color: #ffffff;
   border-radius: 10px;
 `;
@@ -71,4 +74,13 @@ const Content = styled.div`
   white-space: pre-line;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const HeartButton = styled.div`
+  width: 70px;
+  color: var(--gradient-end);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  padding-left: 230px;
 `;
