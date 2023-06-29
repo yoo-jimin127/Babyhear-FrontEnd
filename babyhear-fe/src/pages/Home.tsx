@@ -8,6 +8,7 @@ import FeatButton from "../components/FeatButton";
 import VideoImg from "../assets/video.png";
 import InfantImg from "../assets/infant.png";
 import { useAudioRecorder } from 'react-audio-voice-recorder';
+import GPTChatBox from "../components/GPTchatBox";
 
 const Home = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -61,12 +62,6 @@ const Home = () => {
         console.error("오디오 업로드 실패: ", error);
       });
 
-    // 다운로드 파일 주석
-    // const url = URL.createObjectURL(recordingBlob);
-    // const link = document.createElement("a");
-    // link.href = url;
-    // link.download = "voice.webm";
-    // link.click();
   },[recordingBlob])
 
   useEffect(() => {
@@ -119,6 +114,16 @@ const Home = () => {
         </DetectBox>
       </TopWrapper>
       <BottomWrapper>
+        <ContentBox style={{ height:"250px", marginTop:"20px" }}>
+          <FeatTitle>
+            육아 Tip <span style={{ color: "var(--highlight)" }}>24시간 Q &amp; A</span>
+          </FeatTitle>
+          <FeatDesc>
+            육아와 관련된 질문에 대한 꿀팁을 바로 확인해보세요.<br />
+            chat GPT가 24시간 응답을 대기하고 있어요.
+            <GPTChatBox />
+          </FeatDesc>
+        </ContentBox>
         <ContentBox>
           <FeatTitle>
             영유아를 위한 <span style={{ color: "var(--highlight)"}}>영상 큐레이션</span>
@@ -222,22 +227,21 @@ const ToggleBox = styled.div`
 `;
 
 const BottomWrapper = styled.div`
-  height: 530px;
+  height: 100%;
   display: flex;
-  margin-top: 10px;
+  margin-top: 50px;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
 
   @media (max-width: 420px) {
     justify-content: space-around;
-    margin-top: 50px;
   }
 `;
 
 const ContentBox = styled.div`
   width: 350px;
-  height: 300px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
