@@ -13,7 +13,7 @@ interface VideoCurationButtonProps {
 const VideoCurationButton = ({ link, text, image, category }: VideoCurationButtonProps) => {
   return (
     <ButtonContainer to={link} state={{ category: category }}>
-      <img src={image} alt="curation-image" style={{ width: "70px" }} />
+      <img src={image} alt="curation-img" style={{ width: "70px" }} />
       <Text>{text}</Text>
     </ButtonContainer>
   );

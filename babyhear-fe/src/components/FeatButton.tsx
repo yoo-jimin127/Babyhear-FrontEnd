@@ -26,7 +26,7 @@ export default FeatButton;
 
 const ButtonContainer = styled(Link)`
   width: 350px;
-  height: 130px;
+  height: 100px;
   margin: 10px auto;
   display: flex;
   border-radius: 20px;
@@ -40,7 +40,7 @@ const ButtonContainer = styled(Link)`
 
 const LeftContents = styled.div`
   width: 250px;
-  height: 130px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -54,7 +54,7 @@ const LeftContents = styled.div`
 
 const RightContents = styled.div`
   width: 100px;
-  height: 130px;
+  height: 100px;
   background-color: #ffffff;
   border-radius: 0 20px 20px 0;
   display: flex;
