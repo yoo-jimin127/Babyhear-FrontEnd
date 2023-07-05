@@ -12,6 +12,7 @@ const GPTChatBox = () => {
 
   const handleSubmit = async () => {
     try {
+      setResponse('');
       const response = await axios.post('https://seungyeonnnnnni.shop/completion/chat', {
         message: message
       });
