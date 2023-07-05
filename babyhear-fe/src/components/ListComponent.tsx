@@ -11,10 +11,11 @@ const ListComponent = ({contents}:ListComponentProps) => {
     <Wrapper>
       {contents.map((post, index) => (
         <PostBox
-          key={index}
+          id={index}
           title={post.title}
-          writer={post.writer}
-          text={post.text}
+          nickname={post.nickname}
+          detail={post.detail}
+          date={post.date}
           link={post.link}
         />
       ))}

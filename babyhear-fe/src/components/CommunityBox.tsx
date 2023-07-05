@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PostImg from "../assets/post.png";
 import { CommunityBoxProps } from "../interfaces/postContent";
 
-const CommunityBox = ({ title, writer, text}: CommunityBoxProps) => {
+const CommunityBox = ({ id, title, nickname, detail, date, link}: CommunityBoxProps) => {
   const truncatedTitle = title.length > 15 ? `${title.substring(0, 15)} ...` : title;
-  const truncatedText = text.length > 100 ? `${text.substring(0, 100)} ...` : text;
+  const truncatedText = detail.length > 100 ? `${detail.substring(0, 100)} ...` : detail;
 
   return (
     <Container>
@@ -14,7 +13,7 @@ const CommunityBox = ({ title, writer, text}: CommunityBoxProps) => {
           <img src={PostImg} alt="post-img" style={{ width: "45px" }} />
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "10px" }}>
             <Title>{truncatedTitle}</Title>
-            <Writer>{writer}</Writer>
+            <Writer>{nickname}</Writer>
           </div>
         </TitleBox>
         <Content>{truncatedText}</Content>

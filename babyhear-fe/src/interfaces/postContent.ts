@@ -1,6 +1,8 @@
 export interface CommunityBoxProps {
+  id: number;
   title: string;
-  writer: string;
-  text: string;
+  nickname: string;
+  detail: string;
+  date: string;
   link: string;
 }

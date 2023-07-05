@@ -2,10 +2,34 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import Carousel from "../components/Carousel";
-import { LikePostDummy, RecentPostDummy } from "../static/postContent";
 import ArrowImg from "../assets/arrow.png";
+import { useEffect, useState } from "react";
+import { CommunityBoxProps } from "../interfaces/postContent";
+import axios from "axios";
 
 const Community = () => {
+  const [likePosts, setLikePosts] = useState<Array<CommunityBoxProps>>([]);
+  const [recentPosts, setRecentPosts] = useState<Array<CommunityBoxProps>>([]);
+
+  useEffect(() => {
+    axios
+      .get("https://seungyeonnnnnni.shop/community/latest")
+      .then(response => {
+        setLikePosts(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      axios
+      .get("https://seungyeonnnnnni.shop/community/heart")
+      .then(response => {
+        setRecentPosts(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }, []);
+
   return (
     <Container>
       <Header link="/home" />
@@ -23,7 +47,7 @@ const Community = () => {
               <img src={ArrowImg} alt="arrow-img" style={{ width: "20px" }} />
             </ArrowButton>
           </Category>
-          <Carousel contents={LikePostDummy} />
+          <Carousel contents={likePosts} />
         </ContentBox>
         <ContentBox>
           <Category to="/community-list/2">
@@ -33,7 +57,7 @@ const Community = () => {
               <img src={ArrowImg} alt="arrow-img" style={{ width: "20px" }} />
             </ArrowButton>
           </Category>
-          <Carousel contents={RecentPostDummy} />
+          <Carousel contents={recentPosts} />
         </ContentBox>
       </BottomWrapper>
       <Button to="/post">글쓰기</Button>
