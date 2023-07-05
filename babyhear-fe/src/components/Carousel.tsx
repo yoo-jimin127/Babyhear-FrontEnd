@@ -23,10 +23,11 @@ const Carousel = ({contents}: CarouselProps) => {
     	<Slider {...settings}>
         {contents.map((post, index) => (
           <CommunityBox
-            key={index}
+            id={index}
             title={post.title}
-            writer={post.writer}
-            text={post.text}
+            nickname={post.nickname}
+            detail={post.detail}
+            date={post.date}
             link={post.link}
           />
         ))}

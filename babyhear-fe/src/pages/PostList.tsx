@@ -1,10 +1,33 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
-import { Link } from 'react-router-dom';
-import { LikePostDummy } from '../static/postContent';
 import ListComponent from '../components/ListComponent';
+import { CommunityBoxProps } from '../interfaces/postContent';
 
 const PostList = () => {
+  const [likePosts, setLikePosts] = useState<Array<CommunityBoxProps>>([]);
+  const [recentPosts, setRecentPosts] = useState<Array<CommunityBoxProps>>([]);
+  
+  useEffect(() => {
+    axios
+      .get("https://seungyeonnnnnni.shop/community/latest")
+      .then(response => {
+        setLikePosts(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      axios
+      .get("https://seungyeonnnnnni.shop/community/heart")
+      .then(response => {
+        setRecentPosts(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }, []);
+  
   return (
     <Container>
       <Header link="/community" />
@@ -15,7 +38,7 @@ const PostList = () => {
           다양한 이야기를 함께 나눠보세요!
         </FeatTitle>
           <ContentBox>
-            <ListComponent contents={LikePostDummy} />
+            <ListComponent contents={likePosts} />
           </ContentBox>
       </BottomWrapper>
     </Container>
