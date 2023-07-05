@@ -2,10 +2,13 @@ import { useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Post = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const nicknameList = ["두돌 딸랑구맘", "난청 엄마13", "삼남매아빠", "날씨맑음123", "은평구 해바라기", "인천시 자매맘", "쌍둥이 조아s2", "청각극복 아빠"];
+  const nickname = nicknameList[Math.floor(Math.random() * nicknameList.length)];
   const navigate = useNavigate();
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,14 +20,21 @@ const Post = () => {
   };
 
   const handleSubmit = () => {
-    // axios.post("/api/post", { title, content })
-    //   .then(response => {
-    //     console.log(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-    console.log(`---Submit---\nTitle:${title}\nContent:${content}`);
+    const currentDate = new Date().toISOString().replace("T", " ").split(".")[0] + ".132";
+    axios
+      .post("https://seungyeonnnnnni.shop/community", {
+        title,
+        nickname: nickname,
+        detail: content,
+        date: currentDate,
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      console.log(`title: ${title}, nickname: ${nickname}, detail: ${content}, date: ${currentDate}`)
     navigate("/community");
   };
 
